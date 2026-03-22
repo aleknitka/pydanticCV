@@ -20,7 +20,9 @@ from typing import Annotated, Literal
 from pydantic import BaseModel, StringConstraints, computed_field, model_validator
 from pydantic.functional_validators import AfterValidator
 from pydanticcv.utils.date import PastDate
-from pydanticcv.languages._exams_types.base import LanguageProficiencyCertificate
+from pydanticcv.languages.certificates.eng.base import (
+    EnglishLanguageProficiencyCertificate,
+)
 
 
 def _validate_band_score(v: float) -> float:
@@ -83,7 +85,7 @@ class IELTSScores(BaseModel):
         return self
 
 
-class IELTS(LanguageProficiencyCertificate):
+class IELTS(EnglishLanguageProficiencyCertificate):
     """IELTS exam record with scores, metadata, and derived CEFR level.
 
     Attributes:

@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from enum import StrEnum
 
-from pydanticcv.languages._exams_types import IELTS
+from pydanticcv.languages.certificates import IELTS
 
 
 class CEFRLevel(StrEnum):

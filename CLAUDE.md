@@ -11,7 +11,7 @@ src/pydanticcv/
 └── languages/
     ├── levels.py                   # CEFRLevel (StrEnum), CEFR model
     ├── exams.py                    # STALE — do not import from here
-    └── _exams_types/
+    └── certificates/
         ├── base.py                 # LanguageProficiencyCertificate, CEFRLiteral
         └── eng/                    # English exam models
             ├── ielts.py
@@ -20,17 +20,17 @@ src/pydanticcv/
             └── toefl_itp.py
 ```
 
-Public API: import from `pydanticcv.languages._exams_types` (the package `__init__.py` re-exports everything).
+Public API: import from `pydanticcv.languages.certificates` (the package `__init__.py` re-exports everything).
 
 ## Key types
 
 ### `PastDate` (`utils/date.py`)
 `Annotated[date, BeforeValidator]` — accepts `date` objects or strings in 8 formats (ISO, `YYYY/MM/DD`, `YYYY.MM.DD`, European `DD/MM/YYYY`, US `MM/DD/YYYY`, and dash/dot variants). European order takes priority for ambiguous slash inputs. Rejects future dates.
 
-### `LanguageProficiencyCertificate` (`_exams_types/base.py`)
+### `LanguageProficiencyCertificate` (`certificates/base.py`)
 Base model inherited by all exam records. Fields: `DateTaken: PastDate`, `Link: AnyUrl`.
 
-### `CEFRLiteral` (`_exams_types/base.py`)
+### `CEFRLiteral` (`certificates/base.py`)
 `Literal["A1", "A2", "B1", "B2", "C1", "C2"]` — used for `CEFRLevel` computed fields on all exam models. Do **not** import `CEFRLevel` from `levels.py` inside exam modules (circular import risk).
 
 ### IELTS (`eng/ielts.py`)
@@ -64,8 +64,8 @@ Two models covering the pre-2026 and 2026+ scoring scales:
 
 ## Running
 ```bash
-uv run python -c "from pydanticcv.languages._exams_types import IELTS; print('OK')"
+uv run python -c "from pydanticcv.languages.certificates import IELTS; print('OK')"
 ```
 
 ## Known stale file
-`src/pydanticcv/languages/exams.py` — dead code referencing non-existent `IELTS_Scores`. Nothing imports it. Candidate for deletion.
+`src/pydanticcv/languages/exams.py` — dead code referencing non-existent `IELTSScores`. Nothing imports it. Candidate for deletion.

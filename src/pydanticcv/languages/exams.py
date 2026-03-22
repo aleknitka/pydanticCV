@@ -3,12 +3,12 @@
 from pydantic import BaseModel, Field
 from typing import Optional
 from pydanticcv.utils.date import PastDate
-from pydanticcv.languages._exams_types.ielts import IELTS_Scores
+from pydanticcv.languages.certificates.eng.ielts import IELTSScores
 
 
 class IELTS(BaseModel):
     "International English Language Testing System"
 
-    Scores: IELTS_Scores = Field(..., default_factory=IELTS_Scores)
+    Scores: IELTSScores = Field(..., default_factory=IELTSScores)
     DateTaken: PastDate
     TestCentre: Optional[str]

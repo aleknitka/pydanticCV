@@ -27,11 +27,10 @@ __all__ = ["TOEFLITPLevel", "TOEFLITPSectionScore", "TOEFLITPScores", "TOEFLITP"
 from typing import Annotated, Literal
 from pydantic import BaseModel, computed_field, model_validator
 from pydantic.functional_validators import AfterValidator
-from pydanticcv.languages._exams_types.base import (
-    LanguageProficiencyCertificate,
-    CEFRLiteral,
+from pydanticcv.languages.certificates.base import CEFRLiteral
+from pydanticcv.languages.certificates.eng.base import (
+    EnglishLanguageProficiencyCertificate,
 )
-
 
 TOEFLITPLevel = Literal["Level 1", "Level 2"]
 """TOEFL ITP test level.
@@ -112,7 +111,7 @@ class TOEFLITPScores(BaseModel):
         )
 
 
-class TOEFLITP(LanguageProficiencyCertificate):
+class TOEFLITP(EnglishLanguageProficiencyCertificate):
     """TOEFL ITP exam record.
 
     Attributes:

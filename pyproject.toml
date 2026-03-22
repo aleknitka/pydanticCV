@@ -6,6 +6,24 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = { file = "LICENSE" }
 
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Framework :: Pydantic :: 2",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Operating System :: OS Independent",
+]
+
+[build-system]
+requires = ["uv_build >= 0.10.10, <0.11.0"]
+build-backend = "uv_build"
+
 dependencies = [
     "faker>=40.11.0",
     "polyfactory>=3.3.0",
@@ -21,8 +39,20 @@ dependencies = [
 ]
 
 [tool.tox]
-env_list = ["py311", "py312", "py313", "py314"]
+requires = [ "tox>=4" ]
+env_list = [
+  "py311",
+  "py312",
+  "py313t",
+  "py314t",
+  "py315t",
+]
 
-[tool.tox.env_run_base]
-dependency_groups = [ "tests" ]
-commands = [[ "pytest"]]
+[dependency-groups]
+docs = [
+    "mkdocs>=1.6.1",
+    "mkdocs-gen-files>=0.6.1",
+    "mkdocs-literate-nav>=0.6.3",
+    "mkdocs-material>=9.7.6",
+    "mkdocstrings[python]>=1.0.3",
+]

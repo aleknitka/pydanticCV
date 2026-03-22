@@ -13,6 +13,6 @@ Contents:
 
 __all__ = ["IELTS", "TOEFLiBT", "TOEFLiBTLegacy", "TOEFLITP"]
 
-from pydanticcv.languages._exams_types.eng.ielts import IELTS
-from pydanticcv.languages._exams_types.eng.toefl_ibt import TOEFLiBT, TOEFLiBTLegacy
-from pydanticcv.languages._exams_types.eng.toefl_itp import TOEFLITP
+from pydanticcv.languages.certificates.eng.ielts import IELTS
+from pydanticcv.languages.certificates.eng.toefl_ibt import TOEFLiBT, TOEFLiBTLegacy
+from pydanticcv.languages.certificates.eng.toefl_itp import TOEFLITP

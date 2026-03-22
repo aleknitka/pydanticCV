@@ -30,11 +30,12 @@ __all__ = [
 from typing import Annotated
 from pydantic import BaseModel, computed_field
 from pydantic.functional_validators import AfterValidator
-from pydanticcv.languages._exams_types.base import (
-    LanguageProficiencyCertificate,
-    CEFRLiteral,
+from pydanticcv.languages.certificates.base import CEFRLiteral
+from pydanticcv.languages.certificates.eng.base import (
+    EnglishLanguageProficiencyCertificate,
 )
-from pydanticcv.languages._exams_types.eng.toefl_ibt_conversion import (
+
+from pydanticcv.languages.certificates.eng.toefl_ibt_conversion import (
     READING_TO_NEW,
     LISTENING_TO_NEW,
     WRITING_TO_NEW,
@@ -150,7 +151,7 @@ class TOEFLiBTScores(BaseModel):
         )
 
 
-class TOEFLiBTLegacy(LanguageProficiencyCertificate):
+class TOEFLiBTLegacy(EnglishLanguageProficiencyCertificate):
     """TOEFL iBT exam record using the pre-2026 0-120 scoring scale.
 
     Attributes:
@@ -197,7 +198,7 @@ class TOEFLiBTLegacy(LanguageProficiencyCertificate):
         )
 
 
-class TOEFLiBT(LanguageProficiencyCertificate):
+class TOEFLiBT(EnglishLanguageProficiencyCertificate):
     """TOEFL iBT exam record using the 2026+ 1-6 scoring scale.
 
     Attributes:

@@ -11,8 +11,9 @@ Contents:
 __all__ = ["LanguageProficiencyCertificate", "CEFRLiteral"]
 
 from typing import Literal
-from pydantic import BaseModel, AnyUrl
+from pydantic import BaseModel, AnyUrl, Field
 from pydanticcv.utils.date import PastDate
+from pydantic_extra_types.language_code import ISO639_3
 
 
 CEFRLiteral = Literal["A1", "A2", "B1", "B2", "C1", "C2"]
@@ -30,3 +31,4 @@ class LanguageProficiencyCertificate(BaseModel):
 
     DateTaken: PastDate
     Link: AnyUrl
+    LanguageCertified: ISO639_3 = Field(..., default_factory=ISO639_3)
