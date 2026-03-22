@@ -25,19 +25,15 @@ jobs:
         with:
           python-version: '3.14'
 
-      # ADJUST THIS: install all dependencies (including pdoc)
       - run: pip install uv
       - run: uv sync
-      # ADJUST THIS: build your documentation into docs/.
-      # We use a custom build script for pdoc itself, ideally you just run `pdoc -o docs/ ...` here.
-      - run: uv run pdoc -d docs/
+      - run: uv run pdoc pydanticcv
 
       - uses: actions/upload-pages-artifact@v4
         with:
           path: docs/
 
   # Deploy the artifact to GitHub pages.
-  # This is a separate job so that only actions/deploy-pages has the necessary permissions.
   deploy:
     needs: build
     runs-on: ubuntu-latest

@@ -19,24 +19,16 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+    "pycountry>=24.6.1",
+    "pydantic>=2.12.5",
+    "pydantic-extra-types>=2.11.1",
+    "prek>=0.3.6",
+]
 
 [build-system]
 requires = ["uv_build >= 0.10.10, <0.11.0"]
 build-backend = "uv_build"
-
-dependencies = [
-    "faker>=40.11.0",
-    "polyfactory>=3.3.0",
-    "prek>=0.3.6",
-    "pydantic>=2.12.5",
-    "pydantic-extra-types[pendulum]>=2.11.1",
-    "pytest>=9.0.2",
-    "pytest-cov>=7.1.0",
-    "ruff>=0.15.7",
-    "tox>=4.50.3",
-    "tox-uv>=1.33.4",
-    "ty>=0.0.24",
-]
 
 [tool.tox]
 requires = ["tox>=4", "tox-uv>=1"]
@@ -60,6 +52,18 @@ skip_install = true
 commands = [
   ["coverage", "report", "--show-missing"],
   ["coverage", "html"],
+]
+
+[tool.tox.env.docs]
+description = "Build HTML documentation with pdoc"
+dependency_groups = ["docs"]
+commands = [
+  [
+    "pdoc", "--output-dir", "docs",
+    "pydanticcv",
+    "pydanticcv.languages.certificates.eng",
+    "pydanticcv.languages.certificates.deu",
+  ],
 ]
 
 [tool.pytest.ini_options]
@@ -91,4 +95,12 @@ tests = [
 ]
 docs = [
     "pdoc>=16.0.0",
+]
+dev = [
+    "faker>=40.11.0",
+    "polyfactory>=3.3.0",
+    "ruff>=0.15.7",
+    "tox>=4.50.3",
+    "tox-uv>=1.33.4",
+    "ty>=0.0.24",
 ]

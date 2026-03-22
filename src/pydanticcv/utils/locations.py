@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel, Field
 from pydantic_extra_types.country import CountryAlpha3
-from pydantic_extra_types.coordinate import Latitude, Longitude
+from pydantic_extra_types.coordinate import Latitude as _Latitude, Longitude as _Longitude
 
 
 class Country(BaseModel):
@@ -11,5 +11,5 @@ class Country(BaseModel):
 
 
 class Location(BaseModel):
-    Latitude: Latitude = Field(..., decimal_places=2, default_factory=Latitude)
-    Longitude: Longitude = Field(..., decimal_places=2, default_factory=Longitude)
+    Latitude: _Latitude
+    Longitude: _Longitude
