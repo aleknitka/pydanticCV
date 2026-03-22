@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.ets.org)",
+      "Bash(python -c \"from pydanticcv.languages._exams_types import IELTS, TOEFLiBT, TOEFLiBTLegacy, TOEFLITР; print\\(''OK''\\)\")",
+      "Bash(python -c \"from pydanticcv.languages._exams_types import IELTS, TOEFLiBT, TOEFLiBTLegacy; print\\(''OK''\\)\")",
+      "Bash(uv run:*)",
+      "Bash(uv pip:*)"
+    ]
+  }
+}

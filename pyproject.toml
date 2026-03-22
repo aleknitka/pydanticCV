@@ -1,0 +1,15 @@
+[project]
+name = "pydanticcv"
+version = "0.1.0"
+description = "Simple yet comprahensive pydantic schema for CV/Resume creation and parsing."
+readme = "README.md"
+requires-python = ">=3.13"
+license = { file = "LICENSE" }
+
+dependencies = [
+    "prek>=0.3.6",
+    "pydantic>=2.12.5",
+    "pydantic-extra-types[pendulum]>=2.11.1",
+    "ruff>=0.15.7",
+    "ty>=0.0.24",
+]
