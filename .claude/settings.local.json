@@ -5,7 +5,14 @@
       "Bash(python -c \"from pydanticcv.languages.certificates import IELTS, TOEFLiBT, TOEFLiBTLegacy, TOEFLITР; print\\(''OK''\\)\")",
       "Bash(python -c \"from pydanticcv.languages.certificates import IELTS, TOEFLiBT, TOEFLiBTLegacy; print\\(''OK''\\)\")",
       "Bash(uv run:*)",
-      "Bash(uv pip:*)"
+      "Bash(uv pip:*)",
+      "Bash(find /c/Users/alekn/Documents/github/pydanticCV -name test_* -o -name conftest.py)",
+      "Bash(find C:UsersaleknDocumentsgithubpydanticCVsrc -type f -name *.py)",
+      "Bash(python -m pytest tests/ --collect-only -q)",
+      "Bash(find C:UsersaleknDocumentsgithubpydanticCV -path */.tox -prune -o -path */.venv -prune -o -name test_*.py -type f -print)",
+      "Bash(wc -l C:/Users/alekn/Documents/github/pydanticCV/tests/*.py)",
+      "Bash(uv python:*)",
+      "Bash(ls /c/Users/alekn/Documents/github/pydanticCV/.coverage*)"
     ]
   }
 }

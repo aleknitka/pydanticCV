@@ -39,16 +39,56 @@ dependencies = [
 ]
 
 [tool.tox]
-requires = [ "tox>=4" ]
+requires = ["tox>=4", "tox-uv>=1"]
 env_list = [
   "py311",
   "py312",
-  "py313t",
-  "py314t",
-  "py315t",
+  "py313",
 ]
 
+[tool.tox.env_run_base]
+description = "Run tests with coverage under {base_python}"
+dependency_groups = ["tests"]
+commands = [
+  ["pytest", "--cov=pydanticcv", "--cov-report="],
+]
+
+[tool.tox.env.coverage]
+description = "Generate HTML and terminal coverage reports"
+dependency_groups = ["tests"]
+skip_install = true
+commands = [
+  ["coverage", "report", "--show-missing"],
+  ["coverage", "html"],
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"
+
+[tool.coverage.run]
+source = ["pydanticcv"]
+parallel = true
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 60
+
+[tool.coverage.html]
+directory = "htmlcov"
+
 [dependency-groups]
+tests = [
+    "pytest>=9.0.2",
+    "pytest-cov>=7.1.0",
+    "faker>=40.11.0",
+    "polyfactory>=3.3.0",
+    "pydantic>=2.12.5",
+    "pydantic-extra-types[pendulum,language]>=2.11.1",
+    "pycountry>=24.6.1",
+]
 docs = [
     "mkdocs>=1.6.1",
     "mkdocs-gen-files>=0.6.1",
