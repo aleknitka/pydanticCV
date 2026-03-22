@@ -6,5 +6,21 @@ hooks = [
   { id = "end-of-file-fixer" },
   { id = "check-added-large-files" },
   { id = "trailing-whitespace" },
-  { id = "detect-private-key"}
+  { id = "detect-private-key" },
+  { id = "check-toml" },
+  { id = "check-merge-conflict" },
+]
+
+[[repos]]
+repo = "https://github.com/astral-sh/ruff-pre-commit"
+rev = "v0.15.7"
+hooks = [
+  { id = "ruff", args = ["--fix"] },
+  { id = "ruff-format" },
+]
+
+[[repos]]
+repo = "local"
+hooks = [
+  { id = "ty", name = "ty (type check)", language = "system", entry = "uv run ty check src/", types = ["python"], pass_filenames = false },
 ]

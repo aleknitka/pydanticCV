@@ -3,13 +3,26 @@ name = "pydanticcv"
 version = "0.1.0"
 description = "Simple yet comprahensive pydantic schema for CV/Resume creation and parsing."
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 license = { file = "LICENSE" }
 
 dependencies = [
+    "faker>=40.11.0",
+    "polyfactory>=3.3.0",
     "prek>=0.3.6",
     "pydantic>=2.12.5",
     "pydantic-extra-types[pendulum]>=2.11.1",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.1.0",
     "ruff>=0.15.7",
+    "tox>=4.50.3",
+    "tox-uv>=1.33.4",
     "ty>=0.0.24",
 ]
+
+[tool.tox]
+env_list = ["py311", "py312", "py313", "py314"]
+
+[tool.tox.env_run_base]
+dependency_groups = [ "tests" ]
+commands = [[ "pytest"]]
