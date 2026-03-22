@@ -61,8 +61,7 @@ commands = [
   [
     "pdoc", "--output-dir", "docs",
     "pydanticcv",
-    "pydanticcv.languages.certificates.eng",
-    "pydanticcv.languages.certificates.deu",
+    "pydanticcv.languages",
   ],
 ]
 

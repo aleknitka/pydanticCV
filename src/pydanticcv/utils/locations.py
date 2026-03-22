@@ -1,8 +1,11 @@
 """Utilities for anything to do with locations"""
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from pydantic_extra_types.country import CountryAlpha3
-from pydantic_extra_types.coordinate import Latitude as _Latitude, Longitude as _Longitude
+from pydantic_extra_types.coordinate import (
+    Latitude as _Latitude,
+    Longitude as _Longitude,
+)
 
 
 class Country(BaseModel):

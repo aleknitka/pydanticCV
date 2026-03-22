@@ -18,9 +18,7 @@ from pydanticcv.languages.certificates.eng.toefl_ibt import (
     TOEFLiBT,
 )
 from tests.conftest import (
-    TOEFLiBTLegacyScoresFactory,
     TOEFLiBTLegacyFactory,
-    TOEFLiBTScoresFactory,
     TOEFLiBTFactory,
 )
 
@@ -320,17 +318,19 @@ class TestTOEFLiBTLegacyCEFRLevel:
             (0, "A1"),
         ],
         ids=[
-            "114_C2", "120_C2",
-            "107_C1", "113_C1",
+            "114_C2",
+            "120_C2",
+            "107_C1",
+            "113_C1",
             "95_C1",
             "72_B2",
-            "58_B1", "44_B1",
-            "34_A2", "0_A1",
+            "58_B1",
+            "44_B1",
+            "34_A2",
+            "0_A1",
         ],
     )
-    def test_cefr_level_from_legacy_total(
-        self, total: int, expected_cefr: str
-    ) -> None:
+    def test_cefr_level_from_legacy_total(self, total: int, expected_cefr: str) -> None:
         """Tests CEFRLevel mapping from legacy total score thresholds.
 
         Args:
@@ -380,11 +380,16 @@ class TestTOEFLiBTNewCEFRLevel:
         ],
         ids=[
             "6.0_C2",
-            "5.0_C1", "5.5_C1",
-            "4.0_B2", "4.5_B2",
-            "3.0_B1", "3.5_B1",
-            "2.0_A2", "2.5_A2",
-            "1.0_A1", "1.5_A1",
+            "5.0_C1",
+            "5.5_C1",
+            "4.0_B2",
+            "4.5_B2",
+            "3.0_B1",
+            "3.5_B1",
+            "2.0_A2",
+            "2.5_A2",
+            "1.0_A1",
+            "1.5_A1",
         ],
     )
     def test_cefr_level_from_new_overall(

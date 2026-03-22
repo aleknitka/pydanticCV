@@ -30,7 +30,9 @@ from typing import Annotated, Literal
 from pydantic import BaseModel, computed_field
 from pydantic.functional_validators import AfterValidator
 from pydanticcv.languages.certificates.base import CEFRLiteral
-from pydanticcv.languages.certificates.deu.base import GermanLanguageProficiencyCertificate
+from pydanticcv.languages.certificates.deu.base import (
+    GermanLanguageProficiencyCertificate,
+)
 from pydanticcv.utils.date import PastDate
 
 

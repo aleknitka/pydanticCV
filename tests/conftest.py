@@ -4,7 +4,7 @@ This module provides reusable fixtures and polyfactory-based factories
 for constructing valid test instances of all models.
 """
 
-from datetime import date, timedelta
+from datetime import date
 from typing import Any
 
 import pytest
@@ -15,20 +15,16 @@ from pydantic import AnyUrl
 from pydanticcv.languages.certificates.eng.ielts import (
     IELTS,
     IELTSScores,
-    IELTSBandScore,
 )
 from pydanticcv.languages.certificates.eng.toefl_ibt import (
     TOEFLiBT,
     TOEFLiBTScores,
     TOEFLiBTLegacy,
     TOEFLiBTLegacyScores,
-    TOEFLiBTSectionScore,
-    TOEFLiBTLegacySectionScore,
 )
 from pydanticcv.languages.certificates.eng.toefl_itp import (
     TOEFLITP,
     TOEFLITPScores,
-    TOEFLITPSectionScore,
 )
 
 
@@ -78,14 +74,31 @@ class IELTSScoresFactory(ModelFactory):
         Returns:
             A valid IELTSScores instance with consistent Overall.
         """
-        if any(
-            k in kwargs
-            for k in ["Listening", "Reading", "Writing", "Speaking"]
-        ):
-            listening = kwargs.get("Listening", fake.random_element([v for v in [x * 0.5 for x in range(0, 19)] if 0 <= v <= 9]))  # noqa: E501
-            reading = kwargs.get("Reading", fake.random_element([v for v in [x * 0.5 for x in range(0, 19)] if 0 <= v <= 9]))  # noqa: E501
-            writing = kwargs.get("Writing", fake.random_element([v for v in [x * 0.5 for x in range(0, 19)] if 0 <= v <= 9]))  # noqa: E501
-            speaking = kwargs.get("Speaking", fake.random_element([v for v in [x * 0.5 for x in range(0, 19)] if 0 <= v <= 9]))  # noqa: E501
+        if any(k in kwargs for k in ["Listening", "Reading", "Writing", "Speaking"]):
+            listening = kwargs.get(
+                "Listening",
+                fake.random_element(
+                    [v for v in [x * 0.5 for x in range(0, 19)] if 0 <= v <= 9]
+                ),
+            )  # noqa: E501
+            reading = kwargs.get(
+                "Reading",
+                fake.random_element(
+                    [v for v in [x * 0.5 for x in range(0, 19)] if 0 <= v <= 9]
+                ),
+            )  # noqa: E501
+            writing = kwargs.get(
+                "Writing",
+                fake.random_element(
+                    [v for v in [x * 0.5 for x in range(0, 19)] if 0 <= v <= 9]
+                ),
+            )  # noqa: E501
+            speaking = kwargs.get(
+                "Speaking",
+                fake.random_element(
+                    [v for v in [x * 0.5 for x in range(0, 19)] if 0 <= v <= 9]
+                ),
+            )  # noqa: E501
             overall = round((listening + reading + writing + speaking) / 4 * 2) / 2
             return IELTSScores(
                 Listening=listening,

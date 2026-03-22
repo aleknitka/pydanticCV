@@ -16,8 +16,6 @@ from pydanticcv.languages.certificates.eng.toefl_itp import (
     TOEFLITP,
 )
 from tests.conftest import (
-    TOEFLITPLevel1ScoresFactory,
-    TOEFLITPLevel2ScoresFactory,
     TOEFLITPLevel1Factory,
     TOEFLITPLevel2Factory,
 )

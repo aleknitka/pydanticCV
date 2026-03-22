@@ -17,7 +17,7 @@ from pydanticcv.languages.certificates.eng.ielts import (
     IELTSScores,
     IELTS,
 )
-from tests.conftest import IELTSScoresFactory, IELTSFactory
+from tests.conftest import IELTSFactory
 
 
 class TestIELTSBandScoreValidation:
@@ -323,16 +323,21 @@ class TestIELTSCEFRLevelComputation:
             (4.0, "A1/A2"),
         ],
         ids=[
-            "8.5_C2", "9.0_C2",
-            "7.0_C1", "7.5_C1", "8.0_C1",
-            "5.5_B2", "6.0_B2", "6.5_B2",
-            "4.5_B1", "5.0_B1",
-            "0.0_A1/A2", "4.0_A1/A2",
+            "8.5_C2",
+            "9.0_C2",
+            "7.0_C1",
+            "7.5_C1",
+            "8.0_C1",
+            "5.5_B2",
+            "6.0_B2",
+            "6.5_B2",
+            "4.5_B1",
+            "5.0_B1",
+            "0.0_A1/A2",
+            "4.0_A1/A2",
         ],
     )
-    def test_cefr_level_thresholds(
-        self, overall: float, expected_cefr: str
-    ) -> None:
+    def test_cefr_level_thresholds(self, overall: float, expected_cefr: str) -> None:
         """Tests that CEFRLevel maps Overall correctly to CEFR thresholds.
 
         Args:
