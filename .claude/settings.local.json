@@ -12,7 +12,8 @@
       "Bash(find C:UsersaleknDocumentsgithubpydanticCV -path */.tox -prune -o -path */.venv -prune -o -name test_*.py -type f -print)",
       "Bash(wc -l C:/Users/alekn/Documents/github/pydanticCV/tests/*.py)",
       "Bash(uv python:*)",
-      "Bash(ls /c/Users/alekn/Documents/github/pydanticCV/.coverage*)"
+      "Bash(ls /c/Users/alekn/Documents/github/pydanticCV/.coverage*)",
+      "Bash(uv sync:*)"
     ]
   }
 }

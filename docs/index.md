@@ -1,2 +1,0 @@
-# API Reference
-::: pydanticcv.languages
