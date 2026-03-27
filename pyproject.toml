@@ -21,8 +21,8 @@ classifiers = [
 ]
 dependencies = [
     "pycountry>=24.6.1",
-    "pydantic>=2.12.5",
-    "pydantic-extra-types>=2.11.1",
+    "pydantic[email]>=2.12.5",
+    "pydantic-extra-types[phonenumbers]>=2.11.1",
     "prek>=0.3.6",
 ]
 
@@ -88,7 +88,7 @@ tests = [
     "pytest-cov>=7.1.0",
     "faker>=40.11.0",
     "polyfactory>=3.3.0",
-    "pydantic>=2.12.5",
+    "pydantic[email]>=2.12.5",
     "pydantic-extra-types[pendulum,language]>=2.11.1",
     "pycountry>=24.6.1",
 ]
