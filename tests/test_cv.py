@@ -161,3 +161,14 @@ class TestCV:
         cv2 = CV.model_validate_json(json_str)
         assert cv2.PersonalInfo.Name.FamilyName == "Smith"
         assert cv2.PersonalInfo.Contact.Email == "alice@example.com"
+
+
+class TestPublicAPI:
+    """Tests that the public API re-exports are correct."""
+
+    def test_imports_from_cv_package(self) -> None:
+        from pydanticcv.cv import CV, PersonalInfo, Name, ContactInfo  # noqa: F401
+        assert CV is not None
+        assert PersonalInfo is not None
+        assert Name is not None
+        assert ContactInfo is not None
