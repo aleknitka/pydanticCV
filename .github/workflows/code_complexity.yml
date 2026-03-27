@@ -1,0 +1,15 @@
+name: Check Code Complexity
+on: [push, pull_request]
+
+jobs:
+  complexity:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Check Python Code Complexity
+      uses: rohaquinlop/complexipy-action@v3
+      with:
+        paths: '.'  # Analyze the entire repository
+        ignore_complexity: false # Set to true to ignore complexity checks
+        
+  
