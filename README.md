@@ -1,5 +1,7 @@
 # pydanticCV
 
+[![codecov](https://codecov.io/github/aleknitka/pydanticCV/branch/main/graph/badge.svg?token=BLSHNSUJX1)](https://codecov.io/github/aleknitka/pydanticCV)
+
 Structured Pydantic v2 schemas for CV/resume data — type-safe, validated, and ready to serialise.
 
 ## Overview
