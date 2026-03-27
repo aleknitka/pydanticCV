@@ -34,6 +34,7 @@ from pydanticcv.languages.self_reported import NativeLanguage, SelfReportedCEFR
 from pydanticcv.projects.project import Project
 from pydanticcv.publications.arxiv import ArxivPreprint
 from pydanticcv.publications.journal import JournalArticle
+from pydanticcv.references import Reference, RelationshipType
 from pydanticcv.skills.skill import Skill, SkillType
 from pydanticcv.skills.levels import SkillProficiencyLevel
 
@@ -313,6 +314,32 @@ class ArxivPreprintFactory(ModelFactory):
             kwargs["Categories"] = [fake.random_element(["cs.AI", "cs.LG", "stat.ML"])]
         if "Submitted" not in kwargs:
             kwargs["Submitted"] = fake.date_between(start_date="-5y", end_date="-1y")
+        return cls.__model__(**kwargs)
+
+
+class ReferenceFactory(ModelFactory):
+    """Factory for generating valid Reference instances."""
+
+    __model__ = Reference
+
+    @classmethod
+    def create(cls, **kwargs) -> Reference:
+        """Create a valid Reference instance.
+
+        Args:
+            **kwargs: Field overrides.
+
+        Returns:
+            A valid Reference instance.
+        """
+        if "Name" not in kwargs:
+            kwargs["Name"] = fake.name()
+        if "Title" not in kwargs:
+            kwargs["Title"] = fake.job()
+        if "Organization" not in kwargs:
+            kwargs["Organization"] = fake.company()
+        if "Relationship" not in kwargs:
+            kwargs["Relationship"] = fake.random_element(list(RelationshipType))
         return cls.__model__(**kwargs)
 
 

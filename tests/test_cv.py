@@ -19,6 +19,7 @@ from pydanticcv.skills import Skill
 from pydanticcv.skills.levels import SkillProficiencyLevel
 from pydanticcv.skills.skill import SkillType
 from pydanticcv.activities import VolunteeringActivity
+from pydanticcv.references import Reference, RelationshipType
 from pydanticcv.utils.locations import CVAddress, Country
 
 from tests.conftest import (
@@ -28,6 +29,7 @@ from tests.conftest import (
     IELTSFactory,
     JournalArticleFactory,
     ProjectFactory,
+    ReferenceFactory,
     SkillFactory,
     VolunteeringActivityFactory,
 )
@@ -444,3 +446,74 @@ class TestCVFull:
         assert cv.Publications is None
         assert cv.Projects is None
         assert cv.Volunteering is None
+        assert cv.References is None
+
+
+class TestCVReferences:
+    """Tests for CV with References."""
+
+    def test_cv_with_empty_references(self) -> None:
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            References=[],
+        )
+        assert cv.References == []
+
+    def test_cv_with_single_reference(self) -> None:
+        reference = ReferenceFactory.create()
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            References=[reference],
+        )
+        assert cv.References is not None
+        assert len(cv.References) == 1
+        assert isinstance(cv.References[0], Reference)
+
+    def test_cv_with_multiple_references(self) -> None:
+        references = [ReferenceFactory.create() for _ in range(3)]
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            References=references,
+        )
+        assert cv.References is not None
+        assert len(cv.References) == 3
+        assert all(isinstance(ref, Reference) for ref in cv.References)
+
+    def test_cv_reference_fields(self) -> None:
+        reference = Reference(
+            Name="John Doe",
+            Title="Senior Engineer",
+            Organization="Tech Corp",
+            Relationship=RelationshipType.Manager,
+            Email="john@example.com",
+            Phone="+1234567890",
+            LinkedInURL="https://linkedin.com/in/johndoe",
+        )
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            References=[reference],
+        )
+        assert cv.References[0].Name == "John Doe"
+        assert cv.References[0].Title == "Senior Engineer"
+        assert cv.References[0].Organization == "Tech Corp"
+        assert cv.References[0].Relationship == RelationshipType.Manager
+        assert cv.References[0].Email == "john@example.com"
+        assert cv.References[0].Phone == "+1234567890"
+        assert str(cv.References[0].LinkedInURL) == "https://linkedin.com/in/johndoe"
+
+    def test_cv_reference_round_trip_json(self) -> None:
+        reference = ReferenceFactory.create()
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            References=[reference],
+        )
+
+        json_str = cv.model_dump_json()
+        cv2 = CV.model_validate_json(json_str)
+
+        assert cv2.References is not None
+        assert len(cv2.References) == 1
+        assert cv2.References[0].Name == reference.Name
+        assert cv2.References[0].Title == reference.Title
+        assert cv2.References[0].Organization == reference.Organization
+        assert cv2.References[0].Relationship == reference.Relationship

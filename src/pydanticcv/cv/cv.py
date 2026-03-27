@@ -17,6 +17,7 @@ from pydanticcv.projects import Project
 from pydanticcv.publications import Publication
 from pydanticcv.skills import Skill
 from pydanticcv.activities import VolunteeringActivity
+from pydanticcv.references import Reference
 
 _PersonalInfo = PersonalInfo
 _EducationRecord = EducationRecord
@@ -25,6 +26,7 @@ _Skill = Skill
 _Project = Project
 _Publication = Publication
 _VolunteeringActivity = VolunteeringActivity
+_Reference = Reference
 
 
 class CV(BaseModel):
@@ -43,6 +45,7 @@ class CV(BaseModel):
         Publications: List of academic publications. Optional.
         Projects: List of portfolio projects. Optional.
         Volunteering: List of volunteering activities. Optional.
+        References: List of professional references. Optional.
     """
 
     PersonalInfo: _PersonalInfo
@@ -55,3 +58,4 @@ class CV(BaseModel):
     Publications: list[_Publication] | None = None
     Projects: list[_Project] | None = None
     Volunteering: list[_VolunteeringActivity] | None = None
+    References: list[_Reference] | None = None
