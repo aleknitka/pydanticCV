@@ -589,17 +589,19 @@ wheels = [
 pendulum = [
     { name = "pendulum" },
 ]
+phonenumbers = [
+    { name = "phonenumbers" },
+]
 
 [[package]]
 name = "pydanticcv"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "phonenumbers" },
     { name = "prek" },
     { name = "pycountry" },
     { name = "pydantic", extra = ["email"] },
-    { name = "pydantic-extra-types" },
+    { name = "pydantic-extra-types", extra = ["phonenumbers"] },
 ]
 
 [package.dev-dependencies]
@@ -626,11 +628,10 @@ tests = [
 
 [package.metadata]
 requires-dist = [
-    { name = "phonenumbers", specifier = ">=8.13.0" },
     { name = "prek", specifier = ">=0.3.6" },
     { name = "pycountry", specifier = ">=24.6.1" },
     { name = "pydantic", extras = ["email"], specifier = ">=2.12.5" },
-    { name = "pydantic-extra-types", specifier = ">=2.11.1" },
+    { name = "pydantic-extra-types", extras = ["phonenumbers"], specifier = ">=2.11.1" },
 ]
 
 [package.metadata.requires-dev]

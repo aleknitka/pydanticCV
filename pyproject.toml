@@ -22,8 +22,7 @@ classifiers = [
 dependencies = [
     "pycountry>=24.6.1",
     "pydantic[email]>=2.12.5",
-    "pydantic-extra-types>=2.11.1",
-    "phonenumbers>=8.13.0",
+    "pydantic-extra-types[phonenumbers]>=2.11.1",
     "prek>=0.3.6",
 ]
 

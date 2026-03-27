@@ -7,6 +7,8 @@ import pytest
 from pydantic import ValidationError
 
 from pydanticcv.utils.locations import CVAddress, Country
+from pydanticcv.cv.personal_info import Name, ContactInfo, PersonalInfo
+from pydanticcv.cv.cv import CV
 
 
 class TestCVAddress:
@@ -33,10 +35,6 @@ class TestCVAddress:
         addr = CVAddress(City="Paris", Country=country)
         assert addr.City == "Paris"
         assert addr.Country.name == "France"
-
-
-from pydanticcv.cv.personal_info import Name, ContactInfo, PersonalInfo
-from pydanticcv.cv.cv import CV
 
 
 class TestName:
