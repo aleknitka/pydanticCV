@@ -1,5 +1,5 @@
 """CV schema subpackage.
-
+ 
 Provides the top-level CV model and all supporting personal information models.
 
 Contents:
@@ -12,8 +12,10 @@ Contents:
     Project: A portfolio project entry.
     Publication: Base model for academic publications.
     VolunteeringActivity: A single volunteering activity.
+    Reference: A professional reference.
+    RelationshipType: How a reference knows the CV owner.
 """
-
+ 
 __all__ = [
     "CV",
     "PersonalInfo",
@@ -24,8 +26,10 @@ __all__ = [
     "Project",
     "Publication",
     "VolunteeringActivity",
+    "Reference",
+    "RelationshipType",
 ]
-
+ 
 from pydanticcv.cv.cv import CV
 from pydanticcv.cv.personal_info import PersonalInfo, Name, ContactInfo
 from pydanticcv.employment import EmploymentHistory
@@ -33,3 +37,4 @@ from pydanticcv.projects import Project
 from pydanticcv.publications import Publication
 from pydanticcv.skills import Skill
 from pydanticcv.activities import VolunteeringActivity
+from pydanticcv.references import Reference, RelationshipType
