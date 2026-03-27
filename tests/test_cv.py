@@ -1,14 +1,36 @@
 """Tests for pydanticcv.cv models.
 
-Covers Name, ContactInfo, PersonalInfo, CVAddress, and CV.
+Covers Name, ContactInfo, PersonalInfo, CVAddress, and CV, including
+integration with all other CV section models.
 """
 
 import pytest
 from pydantic import ValidationError
 
-from pydanticcv.utils.locations import CVAddress, Country
-from pydanticcv.cv.personal_info import Name, ContactInfo, PersonalInfo
 from pydanticcv.cv.cv import CV
+from pydanticcv.cv.personal_info import ContactInfo, Name, PersonalInfo
+from pydanticcv.education import EducationRecord
+from pydanticcv.employment import EmploymentHistory
+from pydanticcv.languages import NativeLanguage, SelfReportedCEFR
+from pydanticcv.languages.certificates import IELTS
+from pydanticcv.projects import Project
+from pydanticcv.publications import ArxivPreprint, JournalArticle
+from pydanticcv.skills import Skill
+from pydanticcv.skills.levels import SkillProficiencyLevel
+from pydanticcv.skills.skill import SkillType
+from pydanticcv.activities import VolunteeringActivity
+from pydanticcv.utils.locations import CVAddress, Country
+
+from tests.conftest import (
+    ArxivPreprintFactory,
+    EmploymentBreakFactory,
+    EmploymentRecordFactory,
+    IELTSFactory,
+    JournalArticleFactory,
+    ProjectFactory,
+    SkillFactory,
+    VolunteeringActivityFactory,
+)
 
 
 class TestCVAddress:
@@ -170,3 +192,255 @@ class TestPublicAPI:
         assert PersonalInfo is not None
         assert Name is not None
         assert ContactInfo is not None
+
+    def test_imports_employment_types_from_cv_package(self) -> None:
+        from pydanticcv.cv import EmploymentHistory  # noqa: F401
+        assert EmploymentHistory is not None
+
+    def test_imports_skill_from_cv_package(self) -> None:
+        from pydanticcv.cv import Skill  # noqa: F401
+        assert Skill is not None
+
+    def test_imports_project_from_cv_package(self) -> None:
+        from pydanticcv.cv import Project  # noqa: F401
+        assert Project is not None
+
+    def test_imports_publication_from_cv_package(self) -> None:
+        from pydanticcv.cv import Publication  # noqa: F401
+        assert Publication is not None
+
+    def test_imports_volunteering_activity_from_cv_package(self) -> None:
+        from pydanticcv.cv import VolunteeringActivity  # noqa: F401
+        assert VolunteeringActivity is not None
+
+
+class TestCVEmploymentHistory:
+    """Tests for CV with EmploymentHistory."""
+
+    def test_cv_with_employment_history(self) -> None:
+        record = EmploymentRecordFactory.create()
+        history = EmploymentHistory(Records=[record])
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            EmploymentHistory=history,
+        )
+        assert cv.EmploymentHistory is not None
+        assert len(cv.EmploymentHistory.Records) == 1
+
+    def test_cv_with_employment_history_and_break(self) -> None:
+        record = EmploymentRecordFactory.create()
+        break_record = EmploymentBreakFactory.create()
+        history = EmploymentHistory(Records=[record, break_record])
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            EmploymentHistory=history,
+        )
+        assert len(cv.EmploymentHistory.Records) == 2
+
+
+class TestCVSkills:
+    """Tests for CV with Skills."""
+
+    def test_cv_with_skills(self) -> None:
+        skills = [SkillFactory.create() for _ in range(3)]
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Skills=skills,
+        )
+        assert cv.Skills is not None
+        assert len(cv.Skills) == 3
+
+    def test_cv_with_single_skill(self) -> None:
+        skill = Skill(
+            Name="Python",
+            Type=SkillType.Technical,
+            Level=SkillProficiencyLevel.Expert,
+        )
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Skills=[skill],
+        )
+        assert cv.Skills[0].Name == "Python"
+        assert cv.Skills[0].Level == SkillProficiencyLevel.Expert
+
+
+class TestCVLanguageProficiencies:
+    """Tests for CV with separate language proficiency fields."""
+
+    def test_cv_with_native_language(self) -> None:
+        native = NativeLanguage(Language="eng")
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            NativeLanguages=[native],
+        )
+        assert cv.NativeLanguages is not None
+        assert len(cv.NativeLanguages) == 1
+        assert isinstance(cv.NativeLanguages[0], NativeLanguage)
+
+    def test_cv_with_self_reported_cefr(self) -> None:
+        self_reported = SelfReportedCEFR(Language="fra", Level="B2")
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            SelfReportedLanguages=[self_reported],
+        )
+        assert len(cv.SelfReportedLanguages) == 1
+        assert isinstance(cv.SelfReportedLanguages[0], SelfReportedCEFR)
+
+    def test_cv_with_ielts_certificate(self) -> None:
+        from tests.conftest import IELTSFactory
+        ielts = IELTSFactory.create()
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            LanguageCertificates=[ielts],
+        )
+        assert len(cv.LanguageCertificates) == 1
+        assert isinstance(cv.LanguageCertificates[0], IELTS)
+
+    def test_cv_with_all_language_fields(self) -> None:
+        native = NativeLanguage(Language="eng")
+        self_reported = SelfReportedCEFR(Language="fra", Level="B2")
+        ielts = IELTSFactory.create()
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            NativeLanguages=[native],
+            SelfReportedLanguages=[self_reported],
+            LanguageCertificates=[ielts],
+        )
+        assert len(cv.NativeLanguages) == 1
+        assert len(cv.SelfReportedLanguages) == 1
+        assert len(cv.LanguageCertificates) == 1
+        assert isinstance(cv.NativeLanguages[0], NativeLanguage)
+        assert isinstance(cv.SelfReportedLanguages[0], SelfReportedCEFR)
+        assert isinstance(cv.LanguageCertificates[0], IELTS)
+
+
+class TestCVPublications:
+    """Tests for CV with Publications."""
+
+    def test_cv_with_journal_article(self) -> None:
+        article = JournalArticleFactory.create()
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Publications=[article],
+        )
+        assert cv.Publications is not None
+        assert len(cv.Publications) == 1
+        assert isinstance(cv.Publications[0], JournalArticle)
+
+    def test_cv_with_arxiv_preprint(self) -> None:
+        preprint = ArxivPreprintFactory.create()
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Publications=[preprint],
+        )
+        assert len(cv.Publications) == 1
+        assert isinstance(cv.Publications[0], ArxivPreprint)
+
+    def test_cv_with_mixed_publications(self) -> None:
+        article = JournalArticleFactory.create()
+        preprint = ArxivPreprintFactory.create()
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Publications=[article, preprint],
+        )
+        assert len(cv.Publications) == 2
+
+
+class TestCVProjects:
+    """Tests for CV with Projects."""
+
+    def test_cv_with_project(self) -> None:
+        project = ProjectFactory.create()
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Projects=[project],
+        )
+        assert cv.Projects is not None
+        assert len(cv.Projects) == 1
+        assert isinstance(cv.Projects[0], Project)
+
+
+class TestCVVolunteering:
+    """Tests for CV with Volunteering."""
+
+    def test_cv_with_volunteering_activity(self) -> None:
+        activity = VolunteeringActivityFactory.create()
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Volunteering=[activity],
+        )
+        assert cv.Volunteering is not None
+        assert len(cv.Volunteering) == 1
+        assert isinstance(cv.Volunteering[0], VolunteeringActivity)
+
+
+class TestCVEducation:
+    """Tests for CV with Education placeholder."""
+
+    def test_cv_with_empty_education(self) -> None:
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Education=[],
+        )
+        assert cv.Education == []
+
+    def test_cv_with_education_placeholder(self) -> None:
+        record = EducationRecord()
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Education=[record],
+        )
+        assert len(cv.Education) == 1
+
+
+class TestCVFull:
+    """Tests for a fully populated CV with all sections."""
+
+    def test_cv_full_round_trip_json(self) -> None:
+        cv = CV(
+            PersonalInfo=PersonalInfo(
+                Name=Name(
+                    Title="Dr.",
+                    FamilyName="Smith",
+                    GivenNames=["Alice", "Jane"],
+                ),
+                Contact=ContactInfo(Email="alice@example.com"),
+                Address=CVAddress(City="London"),
+            ),
+            EmploymentHistory=EmploymentHistory(
+                Records=[EmploymentRecordFactory.create()]
+            ),
+            Education=[],
+            Skills=[SkillFactory.create(), SkillFactory.create()],
+            NativeLanguages=[NativeLanguage(Language="eng")],
+            SelfReportedLanguages=[SelfReportedCEFR(Language="fra", Level="B2")],
+            LanguageCertificates=[IELTSFactory.create()],
+            Publications=[JournalArticleFactory.create()],
+            Projects=[ProjectFactory.create()],
+            Volunteering=[VolunteeringActivityFactory.create()],
+        )
+
+        json_str = cv.model_dump_json()
+        cv2 = CV.model_validate_json(json_str)
+
+        assert cv2.PersonalInfo.Name.FamilyName == "Smith"
+        assert cv2.EmploymentHistory is not None
+        assert len(cv2.Skills) == 2
+        assert len(cv2.NativeLanguages) == 1
+        assert len(cv2.SelfReportedLanguages) == 1
+        assert len(cv2.LanguageCertificates) == 1
+        assert len(cv2.Publications) == 1
+        assert len(cv2.Projects) == 1
+        assert len(cv2.Volunteering) == 1
+
+    def test_cv_all_optional_fields_none(self) -> None:
+        cv = CV(PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")))
+        assert cv.EmploymentHistory is None
+        assert cv.Education == []
+        assert cv.Skills is None
+        assert cv.NativeLanguages is None
+        assert cv.SelfReportedLanguages is None
+        assert cv.LanguageCertificates is None
+        assert cv.Publications is None
+        assert cv.Projects is None
+        assert cv.Volunteering is None

@@ -14,8 +14,18 @@ Contents:
     TCF: Test de Connaissance du Français model (A1–C2).
 """
 
-__all__ = ["IELTS", "TOEFLiBT", "TOEFLiBTLegacy", "TOEFLITP", "DELF", "DALF", "TCF"]
+__all__ = [
+    "IELTS",
+    "TOEFLiBT",
+    "TOEFLiBTLegacy",
+    "TOEFLITP",
+    "DELF",
+    "DALF",
+    "TCF",
+    "LanguageProficiencyCertificate",
+]
 
+from pydanticcv.languages.certificates.base import LanguageProficiencyCertificate
 from pydanticcv.languages.certificates.eng.ielts import IELTS
 from pydanticcv.languages.certificates.eng.toefl_ibt import TOEFLiBT, TOEFLiBTLegacy
 from pydanticcv.languages.certificates.eng.toefl_itp import TOEFLITP
