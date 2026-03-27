@@ -184,3 +184,4 @@ uv run ty check src/
 ## License
 
 See [LICENSE](LICENSE).
+Note: This repository uses CI workflows to validate code changes, including a dedicated tox workflow to test multiple Python versions on PRs and main/release merges.
