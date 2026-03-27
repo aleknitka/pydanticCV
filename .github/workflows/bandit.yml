@@ -13,9 +13,8 @@
 name: Bandit
 on:
   push:
-    branches: [ "main", "feature/*" ]
+    branches: [ "**" ]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ "main", "release/*" ]
   schedule:
     - cron: '42 10 * * 4'
