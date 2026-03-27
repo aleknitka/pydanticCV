@@ -35,7 +35,8 @@ class TestCVAddress:
         assert addr.Country.name == "France"
 
 
-from pydanticcv.cv.personal_info import Name, ContactInfo
+from pydanticcv.cv.personal_info import Name, ContactInfo, PersonalInfo
+from pydanticcv.cv.cv import CV
 
 
 class TestName:
@@ -104,3 +105,59 @@ class TestContactInfo:
         )
         assert contact.GitHub is not None
         assert len(contact.OtherUrls) == 1
+
+
+class TestPersonalInfo:
+    """Tests for the PersonalInfo model."""
+
+    def test_requires_name(self) -> None:
+        with pytest.raises(ValidationError):
+            PersonalInfo()
+
+    def test_name_only(self) -> None:
+        pi = PersonalInfo(Name=Name(FamilyName="Smith"))
+        assert pi.Name.FamilyName == "Smith"
+        assert pi.Contact is None
+        assert pi.Address is None
+        assert pi.Photo is None
+
+    def test_all_fields(self) -> None:
+        pi = PersonalInfo(
+            Name=Name(FamilyName="Smith", GivenNames=["Alice"]),
+            Contact=ContactInfo(Email="alice@example.com"),
+            Address=CVAddress(City="London"),
+            Photo="https://example.com/photo.jpg",
+        )
+        assert pi.Name.GivenNames == ["Alice"]
+        assert pi.Contact.Email == "alice@example.com"
+        assert pi.Address.City == "London"
+        assert pi.Photo is not None
+
+
+class TestCV:
+    """Tests for the top-level CV model."""
+
+    def test_requires_personal_info(self) -> None:
+        with pytest.raises(ValidationError):
+            CV()
+
+    def test_minimal_cv(self) -> None:
+        cv = CV(PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")))
+        assert cv.PersonalInfo.Name.FamilyName == "Smith"
+
+    def test_round_trip_json(self) -> None:
+        cv = CV(
+            PersonalInfo=PersonalInfo(
+                Name=Name(
+                    Title="Dr.",
+                    FamilyName="Smith",
+                    GivenNames=["Alice"],
+                ),
+                Contact=ContactInfo(Email="alice@example.com"),
+                Address=CVAddress(City="London"),
+            )
+        )
+        json_str = cv.model_dump_json()
+        cv2 = CV.model_validate_json(json_str)
+        assert cv2.PersonalInfo.Name.FamilyName == "Smith"
+        assert cv2.PersonalInfo.Contact.Email == "alice@example.com"
