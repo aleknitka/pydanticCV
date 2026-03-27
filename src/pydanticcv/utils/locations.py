@@ -6,9 +6,11 @@ Contents:
     CVAddress: Pydantic model for a human-readable CV address (city + country).
 """
 
+from __future__ import annotations
+
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel
 from pydantic_extra_types.country import CountryAlpha3
 from pydantic_extra_types.coordinate import (
     Latitude as _Latitude,
@@ -42,6 +44,9 @@ class Location(BaseModel):
     Longitude: _Longitude
 
 
+_Country = Country  # alias avoids field-name shadowing the class in annotations
+
+
 class CVAddress(BaseModel):
     """A human-readable address for use in a CV.
 
@@ -50,7 +55,5 @@ class CVAddress(BaseModel):
         Country: Country, including ISO 3166-1 alpha-3 code.
     """
 
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-
-    City: Optional[str] = Field(default=None)
-    Country: Optional[Country] = Field(default=None)
+    City: Optional[str] = None
+    Country: Optional[_Country] = None
