@@ -20,6 +20,7 @@ from pydanticcv.skills.levels import SkillProficiencyLevel
 from pydanticcv.skills.skill import SkillType
 from pydanticcv.activities import VolunteeringActivity
 from pydanticcv.references import Reference, RelationshipType
+from pydanticcv.awards import Award
 from pydanticcv.utils.locations import CVAddress, Country
 
 from tests.conftest import (
@@ -32,6 +33,7 @@ from tests.conftest import (
     ReferenceFactory,
     SkillFactory,
     VolunteeringActivityFactory,
+    AwardFactory,
 )
 
 
@@ -395,60 +397,6 @@ class TestCVEducation:
         assert len(cv.Education) == 1
 
 
-class TestCVFull:
-    """Tests for a fully populated CV with all sections."""
-
-    def test_cv_full_round_trip_json(self) -> None:
-        cv = CV(
-            PersonalInfo=PersonalInfo(
-                Name=Name(
-                    Title="Dr.",
-                    FamilyName="Smith",
-                    GivenNames=["Alice", "Jane"],
-                ),
-                Contact=ContactInfo(Email="alice@example.com"),
-                Address=CVAddress(City="London"),
-            ),
-            EmploymentHistory=EmploymentHistory(
-                Records=[EmploymentRecordFactory.create()]
-            ),
-            Education=[],
-            Skills=[SkillFactory.create(), SkillFactory.create()],
-            NativeLanguages=[NativeLanguage(Language="eng")],
-            SelfReportedLanguages=[SelfReportedCEFR(Language="fra", Level="B2")],
-            LanguageCertificates=[IELTSFactory.create()],
-            Publications=[JournalArticleFactory.create()],
-            Projects=[ProjectFactory.create()],
-            Volunteering=[VolunteeringActivityFactory.create()],
-        )
-
-        json_str = cv.model_dump_json()
-        cv2 = CV.model_validate_json(json_str)
-
-        assert cv2.PersonalInfo.Name.FamilyName == "Smith"
-        assert cv2.EmploymentHistory is not None
-        assert len(cv2.Skills) == 2
-        assert len(cv2.NativeLanguages) == 1
-        assert len(cv2.SelfReportedLanguages) == 1
-        assert len(cv2.LanguageCertificates) == 1
-        assert len(cv2.Publications) == 1
-        assert len(cv2.Projects) == 1
-        assert len(cv2.Volunteering) == 1
-
-    def test_cv_all_optional_fields_none(self) -> None:
-        cv = CV(PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")))
-        assert cv.EmploymentHistory is None
-        assert cv.Education == []
-        assert cv.Skills is None
-        assert cv.NativeLanguages is None
-        assert cv.SelfReportedLanguages is None
-        assert cv.LanguageCertificates is None
-        assert cv.Publications is None
-        assert cv.Projects is None
-        assert cv.Volunteering is None
-        assert cv.References is None
-
-
 class TestCVReferences:
     """Tests for CV with References."""
 
@@ -517,3 +465,126 @@ class TestCVReferences:
         assert cv2.References[0].Title == reference.Title
         assert cv2.References[0].Organization == reference.Organization
         assert cv2.References[0].Relationship == reference.Relationship
+
+
+class TestCVAwards:
+    """Tests for CV with Awards."""
+
+    def test_cv_with_empty_awards(self) -> None:
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Awards=[],
+        )
+        assert cv.Awards == []
+
+    def test_cv_with_single_award(self) -> None:
+        award = AwardFactory.create()
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Awards=[award],
+        )
+        assert cv.Awards is not None
+        assert len(cv.Awards) == 1
+        assert isinstance(cv.Awards[0], Award)
+
+    def test_cv_with_multiple_awards(self) -> None:
+        awards = [AwardFactory.create() for _ in range(3)]
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Awards=awards,
+        )
+        assert cv.Awards is not None
+        assert len(cv.Awards) == 3
+        assert all(isinstance(award, Award) for award in cv.Awards)
+
+    def test_cv_award_fields(self) -> None:
+        award = Award(
+            Title="Nobel Prize in Physics",
+            DateReceived="2020-10-06",
+            IssuingOrganization="Royal Swedish Academy of Sciences",
+            Description="For discoveries in black hole formation.",
+        )
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Awards=[award],
+        )
+        assert cv.Awards[0].Title == "Nobel Prize in Physics"
+        assert cv.Awards[0].DateReceived.isoformat() == "2020-10-06"
+        assert cv.Awards[0].IssuingOrganization == "Royal Swedish Academy of Sciences"
+        assert cv.Awards[0].Description == "For discoveries in black hole formation."
+
+    def test_cv_award_round_trip_json(self) -> None:
+        award = AwardFactory.create()
+        cv = CV(
+            PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")),
+            Awards=[award],
+        )
+
+        json_str = cv.model_dump_json()
+        cv2 = CV.model_validate_json(json_str)
+
+        assert cv2.Awards is not None
+        assert len(cv2.Awards) == 1
+        assert cv2.Awards[0].Title == award.Title
+        assert cv2.Awards[0].DateReceived == award.DateReceived
+        assert cv2.Awards[0].IssuingOrganization == award.IssuingOrganization
+        assert cv2.Awards[0].Description == award.Description
+
+
+class TestCVFull:
+    """Tests for a fully populated CV with all sections."""
+
+    def test_cv_full_round_trip_json(self) -> None:
+        cv = CV(
+            PersonalInfo=PersonalInfo(
+                Name=Name(
+                    Title="Dr.",
+                    FamilyName="Smith",
+                    GivenNames=["Alice", "Jane"],
+                ),
+                Contact=ContactInfo(Email="alice@example.com"),
+                Address=CVAddress(City="London"),
+            ),
+            EmploymentHistory=EmploymentHistory(
+                Records=[EmploymentRecordFactory.create()]
+            ),
+            Education=[],
+            Skills=[SkillFactory.create(), SkillFactory.create()],
+            NativeLanguages=[NativeLanguage(Language="eng")],
+            SelfReportedLanguages=[SelfReportedCEFR(Language="fra", Level="B2")],
+            LanguageCertificates=[IELTSFactory.create()],
+            Publications=[JournalArticleFactory.create()],
+            Projects=[ProjectFactory.create()],
+            Volunteering=[VolunteeringActivityFactory.create()],
+            References=[ReferenceFactory.create()],
+            Awards=[AwardFactory.create()],
+        )
+
+        json_str = cv.model_dump_json()
+        cv2 = CV.model_validate_json(json_str)
+
+        assert cv2.PersonalInfo.Name.FamilyName == "Smith"
+        assert cv2.EmploymentHistory is not None
+        assert len(cv2.Skills) == 2
+        assert len(cv2.NativeLanguages) == 1
+        assert len(cv2.SelfReportedLanguages) == 1
+        assert len(cv2.LanguageCertificates) == 1
+        assert len(cv2.Publications) == 1
+        assert len(cv2.Projects) == 1
+        assert len(cv2.Volunteering) == 1
+        assert len(cv2.References) == 1
+        assert len(cv2.Awards) == 1
+
+    def test_cv_all_optional_fields_none(self) -> None:
+        cv = CV(PersonalInfo=PersonalInfo(Name=Name(FamilyName="Smith")))
+        assert cv.EmploymentHistory is None
+        assert cv.Education == []
+        assert cv.Skills is None
+        assert cv.NativeLanguages is None
+        assert cv.SelfReportedLanguages is None
+        assert cv.LanguageCertificates is None
+        assert cv.Publications is None
+        assert cv.Projects is None
+        assert cv.Volunteering is None
+        assert cv.References is None
+        assert cv.Awards is None

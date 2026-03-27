@@ -35,6 +35,7 @@ from pydanticcv.projects.project import Project
 from pydanticcv.publications.arxiv import ArxivPreprint
 from pydanticcv.publications.journal import JournalArticle
 from pydanticcv.references import Reference, RelationshipType
+from pydanticcv.awards import Award
 from pydanticcv.skills.skill import Skill, SkillType
 from pydanticcv.skills.levels import SkillProficiencyLevel
 
@@ -368,6 +369,30 @@ class VolunteeringActivityFactory(ModelFactory):
             kwargs["StartDate"] = fake.date_between(start_date="-5y", end_date="-1y")
         if "Description" not in kwargs:
             kwargs["Description"] = fake.sentence(nb_words=12)
+        return cls.__model__(**kwargs)
+
+
+class AwardFactory(ModelFactory):
+    """Factory for generating valid Award instances."""
+
+    __model__ = Award
+
+    @classmethod
+    def create(cls, **kwargs) -> Award:
+        """Create a valid Award instance.
+
+        Args:
+            **kwargs: Field overrides.
+
+        Returns:
+            A valid Award instance.
+        """
+        if "Title" not in kwargs:
+            kwargs["Title"] = fake.bs().title()
+        if "DateReceived" not in kwargs:
+            kwargs["DateReceived"] = fake.date_between(start_date="-10y", end_date="today")
+        if "IssuingOrganization" not in kwargs:
+            kwargs["IssuingOrganization"] = fake.company()
         return cls.__model__(**kwargs)
 
 
