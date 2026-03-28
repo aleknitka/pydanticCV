@@ -13,7 +13,16 @@
       "Bash(wc -l C:/Users/alekn/Documents/github/pydanticCV/tests/*.py)",
       "Bash(uv python:*)",
       "Bash(ls /c/Users/alekn/Documents/github/pydanticCV/.coverage*)",
-      "Bash(uv sync:*)"
+      "Bash(uv sync:*)",
+      "Bash(git fetch:*)",
+      "Bash(git restore:*)",
+      "Bash(git rebase:*)",
+      "Bash(git stash:*)",
+      "Bash(git add:*)",
+      "Bash(uv lock:*)",
+      "Bash(git checkout:*)",
+      "Bash(git commit:*)",
+      "Skill(commit-commands:commit-push-pr)"
     ]
   }
 }
