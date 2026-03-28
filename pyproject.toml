@@ -96,9 +96,12 @@ docs = [
     "pdoc>=16.0.0",
 ]
 dev = [
+    "bandit>=1.9.4",
     "faker>=40.11.0",
+    "pip-licenses>=5.5.1",
     "polyfactory>=3.3.0",
     "ruff>=0.15.7",
+    "safety>=3.7.0",
     "tox>=4.50.3",
     "tox-uv>=1.33.4",
     "ty>=0.0.24",
