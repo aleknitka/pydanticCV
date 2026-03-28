@@ -12,6 +12,10 @@ from faker import Faker
 from polyfactory.factories.pydantic_factory import ModelFactory
 from pydantic import AnyUrl
 
+from pydanticcv.activities.volunteering import VolunteeringActivity, VolunteeringArea
+from pydanticcv.employment.breaks import EmploymentBreak
+from pydanticcv.employment.record import EmploymentRecord
+from pydanticcv.employment.types import EmploymentType
 from pydanticcv.languages.certificates.eng.ielts import (
     IELTS,
     IELTSScores,
@@ -26,6 +30,14 @@ from pydanticcv.languages.certificates.eng.toefl_itp import (
     TOEFLITP,
     TOEFLITPScores,
 )
+from pydanticcv.languages.self_reported import NativeLanguage, SelfReportedCEFR
+from pydanticcv.projects.project import Project
+from pydanticcv.publications.arxiv import ArxivPreprint
+from pydanticcv.publications.journal import JournalArticle
+from pydanticcv.references import Reference, RelationshipType
+from pydanticcv.awards import Award
+from pydanticcv.skills.skill import Skill, SkillType
+from pydanticcv.skills.levels import SkillProficiencyLevel
 
 
 fake = Faker()
@@ -139,6 +151,248 @@ class IELTSFactory(ModelFactory):
             kwargs["Link"] = AnyUrl(fake.url())
         if "ExamType" not in kwargs:
             kwargs["ExamType"] = fake.random_element(["Academic", "General Training"])
+        if "LanguageCertified" not in kwargs:
+            kwargs["LanguageCertified"] = "eng"
+        return cls.__model__(**kwargs)
+
+
+class EmploymentRecordFactory(ModelFactory):
+    """Factory for generating valid EmploymentRecord instances."""
+
+    __model__ = EmploymentRecord
+
+    @classmethod
+    def create(cls, **kwargs) -> EmploymentRecord:
+        """Create a valid EmploymentRecord instance.
+
+        Args:
+            **kwargs: Field overrides.
+
+        Returns:
+            A valid EmploymentRecord instance.
+        """
+        if "EmployerName" not in kwargs:
+            kwargs["EmployerName"] = fake.company()
+        if "Role" not in kwargs:
+            kwargs["Role"] = fake.job()
+        if "EmploymentType" not in kwargs:
+            kwargs["EmploymentType"] = EmploymentType.EMPLOYEE
+        if "StartDate" not in kwargs:
+            kwargs["StartDate"] = fake.date_between(start_date="-10y", end_date="-2y")
+        return cls.__model__(**kwargs)
+
+
+class EmploymentBreakFactory(ModelFactory):
+    """Factory for generating valid EmploymentBreak instances."""
+
+    __model__ = EmploymentBreak
+
+    @classmethod
+    def create(cls, **kwargs) -> EmploymentBreak:
+        """Create a valid EmploymentBreak instance.
+
+        Args:
+            **kwargs: Field overrides.
+
+        Returns:
+            A valid EmploymentBreak instance.
+        """
+        if "StartDate" not in kwargs:
+            kwargs["StartDate"] = fake.date_between(start_date="-5y", end_date="-1y")
+        return cls.__model__(**kwargs)
+
+
+class SkillFactory(ModelFactory):
+    """Factory for generating valid Skill instances."""
+
+    __model__ = Skill
+
+    @classmethod
+    def create(cls, **kwargs) -> Skill:
+        """Create a valid Skill instance.
+
+        Args:
+            **kwargs: Field overrides.
+
+        Returns:
+            A valid Skill instance.
+        """
+        if "Name" not in kwargs:
+            kwargs["Name"] = fake.word().capitalize()
+        if "Type" not in kwargs:
+            kwargs["Type"] = SkillType.Technical
+        if "Level" not in kwargs:
+            kwargs["Level"] = SkillProficiencyLevel.Intermediate
+        return cls.__model__(**kwargs)
+
+
+class NativeLanguageFactory(ModelFactory):
+    """Factory for generating valid NativeLanguage instances."""
+
+    __model__ = NativeLanguage
+
+
+class SelfReportedCEFRFactory(ModelFactory):
+    """Factory for generating valid SelfReportedCEFR instances."""
+
+    __model__ = SelfReportedCEFR
+
+
+class ProjectFactory(ModelFactory):
+    """Factory for generating valid Project instances."""
+
+    __model__ = Project
+
+    @classmethod
+    def create(cls, **kwargs) -> Project:
+        """Create a valid Project instance.
+
+        Args:
+            **kwargs: Field overrides.
+
+        Returns:
+            A valid Project instance.
+        """
+        if "Name" not in kwargs:
+            kwargs["Name"] = fake.catch_phrase()
+        if "Description" not in kwargs:
+            kwargs["Description"] = fake.sentence(nb_words=10)
+        if "StartDate" not in kwargs:
+            kwargs["StartDate"] = fake.date_between(start_date="-5y", end_date="-1y")
+        return cls.__model__(**kwargs)
+
+
+class JournalArticleFactory(ModelFactory):
+    """Factory for generating valid JournalArticle instances."""
+
+    __model__ = JournalArticle
+
+    @classmethod
+    def create(cls, **kwargs) -> JournalArticle:
+        """Create a valid JournalArticle instance.
+
+        Args:
+            **kwargs: Field overrides.
+
+        Returns:
+            A valid JournalArticle instance.
+        """
+        if "Title" not in kwargs:
+            kwargs["Title"] = fake.sentence(nb_words=8)
+        if "Authors" not in kwargs:
+            kwargs["Authors"] = [fake.name() for _ in range(fake.random_int(min=1, max=5))]
+        if "Year" not in kwargs:
+            kwargs["Year"] = fake.random_int(min=2000, max=date.today().year)
+        if "Journal" not in kwargs:
+            kwargs["Journal"] = fake.catch_phrase()
+        return cls.__model__(**kwargs)
+
+
+class ArxivPreprintFactory(ModelFactory):
+    """Factory for generating valid ArxivPreprint instances."""
+
+    __model__ = ArxivPreprint
+
+    @classmethod
+    def create(cls, **kwargs) -> ArxivPreprint:
+        """Create a valid ArxivPreprint instance.
+
+        Args:
+            **kwargs: Field overrides.
+
+        Returns:
+            A valid ArxivPreprint instance.
+        """
+        if "Title" not in kwargs:
+            kwargs["Title"] = fake.sentence(nb_words=8)
+        if "Authors" not in kwargs:
+            kwargs["Authors"] = [fake.name() for _ in range(fake.random_int(min=1, max=5))]
+        if "Year" not in kwargs:
+            kwargs["Year"] = fake.random_int(min=2000, max=date.today().year)
+        if "ArxivID" not in kwargs:
+            kwargs["ArxivID"] = f"{fake.numerify('####')}.{fake.numerify('####')}"
+        if "Categories" not in kwargs:
+            kwargs["Categories"] = [fake.random_element(["cs.AI", "cs.LG", "stat.ML"])]
+        if "Submitted" not in kwargs:
+            kwargs["Submitted"] = fake.date_between(start_date="-5y", end_date="-1y")
+        return cls.__model__(**kwargs)
+
+
+class ReferenceFactory(ModelFactory):
+    """Factory for generating valid Reference instances."""
+
+    __model__ = Reference
+
+    @classmethod
+    def create(cls, **kwargs) -> Reference:
+        """Create a valid Reference instance.
+
+        Args:
+            **kwargs: Field overrides.
+
+        Returns:
+            A valid Reference instance.
+        """
+        if "Name" not in kwargs:
+            kwargs["Name"] = fake.name()
+        if "Title" not in kwargs:
+            kwargs["Title"] = fake.job()
+        if "Organization" not in kwargs:
+            kwargs["Organization"] = fake.company()
+        if "Relationship" not in kwargs:
+            kwargs["Relationship"] = fake.random_element(list(RelationshipType))
+        return cls.__model__(**kwargs)
+
+
+class VolunteeringActivityFactory(ModelFactory):
+    """Factory for generating valid VolunteeringActivity instances."""
+
+    __model__ = VolunteeringActivity
+
+    @classmethod
+    def create(cls, **kwargs) -> VolunteeringActivity:
+        """Create a valid VolunteeringActivity instance.
+
+        Args:
+            **kwargs: Field overrides.
+
+        Returns:
+            A valid VolunteeringActivity instance.
+        """
+        if "Organisation" not in kwargs:
+            kwargs["Organisation"] = fake.company()
+        if "Role" not in kwargs:
+            kwargs["Role"] = fake.random_element(["Volunteer", "Coordinator", "Mentor"])
+        if "Area" not in kwargs:
+            kwargs["Area"] = VolunteeringArea.Community
+        if "StartDate" not in kwargs:
+            kwargs["StartDate"] = fake.date_between(start_date="-5y", end_date="-1y")
+        if "Description" not in kwargs:
+            kwargs["Description"] = fake.sentence(nb_words=12)
+        return cls.__model__(**kwargs)
+
+
+class AwardFactory(ModelFactory):
+    """Factory for generating valid Award instances."""
+
+    __model__ = Award
+
+    @classmethod
+    def create(cls, **kwargs) -> Award:
+        """Create a valid Award instance.
+
+        Args:
+            **kwargs: Field overrides.
+
+        Returns:
+            A valid Award instance.
+        """
+        if "Title" not in kwargs:
+            kwargs["Title"] = fake.bs().title()
+        if "DateReceived" not in kwargs:
+            kwargs["DateReceived"] = fake.date_between(start_date="-10y", end_date="today")
+        if "IssuingOrganization" not in kwargs:
+            kwargs["IssuingOrganization"] = fake.company()
         return cls.__model__(**kwargs)
 
 

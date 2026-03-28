@@ -1,3 +1,5 @@
+name: security - snyk
+on: push
 jobs:
   security:
     runs-on: ubuntu-latest

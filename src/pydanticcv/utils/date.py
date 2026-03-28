@@ -1,4 +1,24 @@
-"""Utilities for date and time"""
+"""Utilities for date and time.
+
+Contents:
+    PastDate: Annotated date type that validates against future dates.
+
+PastDate accepts date objects or strings in any of these formats:
+
+    | Format         | Example      |
+    |----------------|--------------|
+    | ISO            | 2024-11-15   |
+    | Numeric slash  | 2024/11/15   |
+    | Numeric dot    | 2024.11.15   |
+    | European       | 15/11/2024   |
+    | US             | 11/15/2024   |
+    | European dash  | 15-11-2024   |
+    | US dash        | 11-15-2024   |
+    | European dot   | 15.11.2024   |
+
+For ambiguous slash formats (e.g. 01/03/2024) European order (DD/MM) is assumed.
+Future dates are always rejected.
+"""
 
 __all__ = ["PastDate"]
 from typing import Annotated
