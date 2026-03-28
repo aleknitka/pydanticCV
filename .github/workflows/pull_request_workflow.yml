@@ -1,6 +1,5 @@
 name: pull_request_workflow
-on: pull-request
-branches: [ "**"]
+on: pull_request
 jobs:
   security:
     runs-on: ubuntu-latest
