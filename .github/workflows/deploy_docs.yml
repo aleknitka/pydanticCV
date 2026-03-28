@@ -27,7 +27,7 @@ jobs:
 
       - run: pip install uv
       - run: uv sync --group docs
-      - run: uv run pdoc pydanticcv
+      - run: uv run pdoc pydanticcv -d docs/
 
       - uses: actions/upload-pages-artifact@v4
         with:
