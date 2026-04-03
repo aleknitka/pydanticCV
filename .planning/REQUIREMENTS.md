@@ -4,21 +4,21 @@
 
 ### New Language Certificates
 
-- [ ] **LANG-01**: Add HSK Chinese exam model with score validation and CEFR mapping
-- [ ] **LANG-02**: Add CELPIP Canadian English exam model with score validation and CEFR mapping
-- [ ] **LANG-03**: Add TEF French-Canadian exam model with score validation and CEFR mapping
+- [x] **LANG-01**: Add HSK Chinese exam model with score validation and CEFR mapping
+- [x] **LANG-02**: Add CELPIP Canadian English exam model with score validation and CEFR mapping
+- [x] **LANG-03**: Add TEF French-Canadian exam model with score validation and CEFR mapping
 
 ### Certifications CV Section
 
-- [ ] **CERT-01**: Create `SkillCertificate` model with name, issuer, date, verification URL
-- [ ] **CERT-02**: Add `SkillCertificate` list field to CV model
-- [ ] **CERT-03**: Add issuer validation with curated allowlist (AWS, Azure, GCP, PMI, ISC2, CompTIA)
+- [x] **CERT-01**: Create `SkillCertificate` model with name, issuer, date, verification URL
+- [x] **CERT-02**: Add `SkillCertificate` list field to CV model
+- [x] **CERT-03**: Add issuer validation with curated allowlist (AWS, Azure, GCP, PMI, ISC2, CompTIA)
 
 ### Social/Profile Links CV Section
 
-- [ ] **SOCIAL-01**: Expand existing social links in PersonalInfo to support all major platforms
-- [ ] **SOCIAL-02**: Add platform auto-detection from URL patterns
-- [ ] **SOCIAL-03**: Support ORCID, Google Scholar, ResearchGate, Behance, Dribbble
+- [x] **SOCIAL-01**: Expand existing social links in PersonalInfo to support all major platforms
+- [x] **SOCIAL-02**: Add platform auto-detection from URL patterns
+- [x] **SOCIAL-03**: Support ORCID, Google Scholar, ResearchGate, Behance, Dribbble
 
 ## v2 Requirements (Deferred)
 
@@ -38,15 +38,15 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LANG-01 | Phase 1 | pending |
-| LANG-02 | Phase 2 | pending |
-| LANG-03 | Phase 2 | pending |
-| CERT-01 | Phase 3 | pending |
-| CERT-02 | Phase 3 | pending |
-| CERT-03 | Phase 3 | pending |
-| SOCIAL-01 | Phase 4 | pending |
-| SOCIAL-02 | Phase 4 | pending |
-| SOCIAL-03 | Phase 4 | pending |
+| LANG-01 | Phase 1 | ✓ Complete |
+| LANG-02 | Phase 2 | ✓ Complete |
+| LANG-03 | Phase 2 | ✓ Complete |
+| CERT-01 | Phase 3 | ✓ Complete |
+| CERT-02 | Phase 3 | ✓ Complete |
+| CERT-03 | Phase 3 | ✓ Complete |
+| SOCIAL-01 | Phase 4 | ✓ Complete |
+| SOCIAL-02 | Phase 4 | ✓ Complete |
+| SOCIAL-03 | Phase 4 | ✓ Complete |
 
 ---
 
