@@ -4,24 +4,24 @@
 
 **Project:** pydanticCV
 **Core Value:** Validated CV schema models that can be imported and used to create type-safe resume data with built-in validation.
-**Current Focus:** Phase 1: Chinese Language Certificates (HSK) - COMPLETE
+**Current Focus:** Phase 2: Additional Language Certificates (CELPIP, TEF) - COMPLETE
 
 ## Current Position
 
 | Attribute | Value |
 |-----------|-------|
-| **Phase** | 1 |
+| **Phase** | 2 |
 | **Plan** | Complete |
 | **Status** | Complete |
-| **Progress** | ████████░░ 80% (4/5 phases) |
+| **Progress** | ██████████ 100% (4/4 phases) |
 
 ## Performance Metrics
 
 | Metric | Value |
 |--------|-------|
-| Requirements Mapped | 1/9 |
-| Plans Completed | 1/4 |
-| Phases Completed | 1/4 |
+| Requirements Mapped | 3/9 |
+| Plans Completed | 2/4 |
+| Phases Completed | 2/4 |
 
 ## Accumulated Context
 
@@ -45,14 +45,19 @@
   - HSK model with score validation and CEFR mapping
   - 28 tests passing
   - Public API integration
+- [x] Phase 2: CELPIP and TEF implementation complete
+  - CELPIP (Canadian English) model with CLB 4-12 validation
+  - TEF (French) model with 6-section validation (0-20 each)
+  - 56 tests passing
+  - Public API integration
 
 ### Todos
 
 - [x] Plan Phase 1: HSK implementation
 - [x] Implement ChineseLanguageProficiencyCertificate base class
 - [x] Implement HSK model with score validation and CEFR computation
-- [ ] Plan Phase 2: Additional language certificates
-- [ ] Execute next phase
+- [x] Plan Phase 2: Additional language certificates
+- [x] Execute Phase 2: CELPIP and TEF implementation
 
 ### Blockers
 
@@ -68,9 +73,10 @@
 - Requirements defined (9 v1 requirements)
 - Roadmap created (4 phases derived from requirements)
 - Phase 1 execution (HSK implementation) - COMPLETE
+- Phase 2 execution (CELPIP + TEF implementation) - COMPLETE
 
 **Next:**
-- Plan Phase 2 or execute next phase
+- Plan Phase 3: Additional language certificates (DELF/DALF, Goethe)
 
 ---
 *State updated: 2026-04-03*

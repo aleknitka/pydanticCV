@@ -3,7 +3,7 @@
 ## Phases
 
 - [x] **Phase 1: Chinese Language Certificates (HSK)** - HSK exam model with score validation and CEFR mapping
-- [ ] **Phase 2: Additional Language Certificates (CELPIP, TEF)** - CELPIP and TEF exam models with CEFR computation
+- [x] **Phase 2: Additional Language Certificates (CELPIP, TEF)** - CELPIP and TEF exam models with CEFR computation
 - [ ] **Phase 3: Professional Certifications** - SkillCertificate model with issuer validation
 - [ ] **Phase 4: Social/Profile Links** - Expand social links with platform auto-detection
 
@@ -25,7 +25,7 @@
   3. CEFR level is computed from HSK level using documented mapping (HSK5→C1, HSK4→B2, HSK3→B1, HSK1-2→A2)
   4. Invalid HSK score combinations are rejected with clear validation errors
 
-**Plans**: TBD
+**Plans**: [phase-02-plan.md](phases/phase-02-plan.md)
 
 ---
 
@@ -44,7 +44,7 @@
   4. Invalid TEF section scores are rejected with validation errors
   5. CEFR levels are correctly computed for both exam types
 
-**Plans**: TBD
+**Plans**: [phase-02-plan.md](phases/phase-02-plan.md)
 
 ---
 
@@ -62,7 +62,7 @@
   3. Issuer field validates against curated allowlist (AWS, Azure, GCP, PMI, ISC2, CompTIA)
   4. Invalid issuers outside the allowlist are rejected with clear error message
 
-**Plans**: TBD
+**Plans**: [phase-02-plan.md](phases/phase-02-plan.md)
 
 ---
 
@@ -80,7 +80,7 @@
   3. User can add academic/professional profiles (ORCID, Google Scholar, ResearchGate, Behance, Dribbble)
   4. Invalid URLs are rejected with scheme validation (https required)
 
-**Plans**: TBD
+**Plans**: [phase-02-plan.md](phases/phase-02-plan.md)
 
 ---
 
@@ -89,7 +89,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Chinese Language (HSK) | 1/1 | Complete | 2026-04-03 |
-| 2. Additional Languages (CELPIP, TEF) | 0/1 | Not started | - |
+| 2. Additional Languages (CELPIP, TEF) | 1/1 | Complete | 2026-04-03 |
 | 3. Professional Certifications | 0/1 | Not started | - |
 | 4. Social/Profile Links | 0/1 | Not started | - |
 
