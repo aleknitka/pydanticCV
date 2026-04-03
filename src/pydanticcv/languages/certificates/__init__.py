@@ -12,6 +12,7 @@ Contents:
     DELF: Diplôme d'Études en Langue Française model (A1–B2).
     DALF: Diplôme Approfondi de Langue Française model (C1–C2).
     TCF: Test de Connaissance du Français model (A1–C2).
+    HSK: HSK (汉语水平考试) Chinese proficiency exam model.
 """
 
 __all__ = [
@@ -22,12 +23,18 @@ __all__ = [
     "DELF",
     "DALF",
     "TCF",
+    "TEF",
+    "HSK",
+    "CELPIP",
     "LanguageProficiencyCertificate",
 ]
 
 from pydanticcv.languages.certificates.base import LanguageProficiencyCertificate
+from pydanticcv.languages.certificates.eng.celpip import CELPIP
 from pydanticcv.languages.certificates.eng.ielts import IELTS
 from pydanticcv.languages.certificates.eng.toefl_ibt import TOEFLiBT, TOEFLiBTLegacy
 from pydanticcv.languages.certificates.eng.toefl_itp import TOEFLITP
 from pydanticcv.languages.certificates.fra.delf_dalf import DALF, DELF
 from pydanticcv.languages.certificates.fra.tcf import TCF
+from pydanticcv.languages.certificates.fra.tef import TEF
+from pydanticcv.languages.certificates.zho.hsk import HSK

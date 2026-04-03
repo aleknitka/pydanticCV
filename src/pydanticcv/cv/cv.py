@@ -16,6 +16,7 @@ from pydanticcv.languages.certificates import LanguageProficiencyCertificate
 from pydanticcv.projects import Project
 from pydanticcv.publications import Publication
 from pydanticcv.skills import Skill
+from pydanticcv.skills.certificates import SkillCertificate
 from pydanticcv.activities import VolunteeringActivity
 from pydanticcv.references import Reference
 from pydanticcv.awards import Award
@@ -24,6 +25,7 @@ _PersonalInfo = PersonalInfo
 _EducationRecord = EducationRecord
 _EmploymentHistory = EmploymentHistory
 _Skill = Skill
+_SkillCertificate = SkillCertificate
 _Project = Project
 _Publication = Publication
 _VolunteeringActivity = VolunteeringActivity
@@ -39,6 +41,8 @@ class CV(BaseModel):
         EmploymentHistory: Full employment timeline with gap detection. Optional.
         Education: List of education entries. Defaults to empty list.
         Skills: List of professional skills. Optional.
+        ProfessionalCertificates: List of professional certifications with validated issuers.
+            Optional.
         NativeLanguages: List of native/mother-tongue languages. Optional.
         SelfReportedLanguages: List of self-assessed CEFR proficiency levels.
             Optional.
@@ -55,6 +59,7 @@ class CV(BaseModel):
     EmploymentHistory: _EmploymentHistory | None = None
     Education: list[_EducationRecord] = Field(default_factory=list)
     Skills: list[_Skill] | None = None
+    ProfessionalCertificates: list[_SkillCertificate] = Field(default_factory=list)
     NativeLanguages: list[NativeLanguage] | None = None
     SelfReportedLanguages: list[SelfReportedCEFR] | None = None
     LanguageCertificates: list[LanguageProficiencyCertificate] | None = None
