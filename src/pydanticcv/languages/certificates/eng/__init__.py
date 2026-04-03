@@ -10,8 +10,9 @@ Contents:
     TOEFLITP: TOEFL ITP (Institutional Testing Program) model.
 """
 
-__all__ = ["IELTS", "TOEFLiBT", "TOEFLiBTLegacy", "TOEFLITP"]
+__all__ = ["IELTS", "TOEFLiBT", "TOEFLiBTLegacy", "TOEFLITP", "CELPIP"]
 
+from pydanticcv.languages.certificates.eng.celpip import CELPIP
 from pydanticcv.languages.certificates.eng.ielts import IELTS
 from pydanticcv.languages.certificates.eng.toefl_ibt import TOEFLiBT, TOEFLiBTLegacy
 from pydanticcv.languages.certificates.eng.toefl_itp import TOEFLITP

@@ -9,7 +9,8 @@ Contents:
     TCF: Test de Connaissance du Français (A1–C2, score-based).
 """
 
-__all__ = ["DELF", "DALF", "TCF"]
+__all__ = ["DELF", "DALF", "TCF", "TEF"]
 
 from pydanticcv.languages.certificates.fra.delf_dalf import DALF, DELF
 from pydanticcv.languages.certificates.fra.tcf import TCF
+from pydanticcv.languages.certificates.fra.tef import TEF
