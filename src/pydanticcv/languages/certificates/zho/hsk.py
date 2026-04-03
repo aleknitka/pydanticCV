@@ -25,18 +25,6 @@ from pydanticcv.languages.certificates.zho.base import (
 from pydanticcv.utils.date import PastDate
 
 
-# HSK 3.0 score ranges per level
-# Levels 1-2: Listening + Reading only (100 points each, total 200)
-# Levels 3-6: Listening + Reading + Writing (100 points each, total 300)
-_HSK_SCORE_RANGES = {
-    1: {"Listening": (0, 100), "Reading": (0, 100)},
-    2: {"Listening": (0, 100), "Reading": (0, 100)},
-    3: {"Listening": (0, 100), "Reading": (0, 100), "Writing": (0, 100)},
-    4: {"Listening": (0, 100), "Reading": (0, 100), "Writing": (0, 100)},
-    5: {"Listening": (0, 100), "Reading": (0, 100), "Writing": (0, 100)},
-    6: {"Listening": (0, 100), "Reading": (0, 100), "Writing": (0, 100)},
-}
-
 _HSK_PASS_SCORES = {
     1: 120,
     2: 120,

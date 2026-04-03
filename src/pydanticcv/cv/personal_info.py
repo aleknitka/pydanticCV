@@ -155,17 +155,17 @@ class ContactInfo(BaseModel):
 
     Email: Optional[EmailStr] = None
     Phone: Optional[PhoneNumber] = None
-    Website: Optional[AnyUrl] = None
-    LinkedIn: Optional[AnyUrl] = None
-    GitHub: Optional[AnyUrl] = None
-    Twitter: Optional[AnyUrl] = None
-    ORCID: Optional[AnyUrl] = None
-    GoogleScholar: Optional[AnyUrl] = None
-    ResearchGate: Optional[AnyUrl] = None
-    Behance: Optional[AnyUrl] = None
-    Dribbble: Optional[AnyUrl] = None
+    Website: Optional[Annotated[AnyUrl, BeforeValidator(_validate_https)]] = None
+    LinkedIn: Optional[Annotated[AnyUrl, BeforeValidator(_validate_https)]] = None
+    GitHub: Optional[Annotated[AnyUrl, BeforeValidator(_validate_https)]] = None
+    Twitter: Optional[Annotated[AnyUrl, BeforeValidator(_validate_https)]] = None
+    ORCID: Optional[Annotated[AnyUrl, BeforeValidator(_validate_https)]] = None
+    GoogleScholar: Optional[Annotated[AnyUrl, BeforeValidator(_validate_https)]] = None
+    ResearchGate: Optional[Annotated[AnyUrl, BeforeValidator(_validate_https)]] = None
+    Behance: Optional[Annotated[AnyUrl, BeforeValidator(_validate_https)]] = None
+    Dribbble: Optional[Annotated[AnyUrl, BeforeValidator(_validate_https)]] = None
     ProfileLinks: list[ProfileLink] = []
-    OtherUrls: list[AnyUrl] = []
+    OtherUrls: list[Annotated[AnyUrl, BeforeValidator(_validate_https)]] = []
 
 
 _Name = Name  # alias avoids field-name shadowing the class in annotations

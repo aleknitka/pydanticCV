@@ -12,7 +12,7 @@ __all__ = ["SkillCertificate", "IssuerAllowlist"]
 from datetime import date
 from typing import Literal
 
-from pydantic import AnyUrl, BaseModel, model_validator
+from pydantic import AnyUrl, BaseModel
 
 from pydanticcv.utils.date import PastDate
 
@@ -37,22 +37,3 @@ class SkillCertificate(BaseModel):
     DateObtained: PastDate
     ExpiryDate: date | None = None
     Link: AnyUrl | None = None
-
-    @model_validator(mode="after")
-    def _validate_issuer(self) -> "SkillCertificate":
-        """Validate that the issuer is in the allowlist.
-
-        This additional validation provides clear error messages for invalid issuers.
-
-        Returns:
-            SkillCertificate: The validated instance.
-
-        Raises:
-            ValueError: If the issuer is not in the allowlist.
-        """
-        allowed = {"AWS", "Azure", "GCP", "PMI", "ISC2", "CompTIA"}
-        if self.Issuer not in allowed:
-            raise ValueError(
-                f"Invalid issuer '{self.Issuer}'. Must be one of: {', '.join(sorted(allowed))}"
-            )
-        return self
