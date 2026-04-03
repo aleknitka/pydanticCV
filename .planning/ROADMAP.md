@@ -2,7 +2,7 @@
 
 ## Phases
 
-- [ ] **Phase 1: Chinese Language Certificates (HSK)** - HSK exam model with score validation and CEFR mapping
+- [x] **Phase 1: Chinese Language Certificates (HSK)** - HSK exam model with score validation and CEFR mapping
 - [ ] **Phase 2: Additional Language Certificates (CELPIP, TEF)** - CELPIP and TEF exam models with CEFR computation
 - [ ] **Phase 3: Professional Certifications** - SkillCertificate model with issuer validation
 - [ ] **Phase 4: Social/Profile Links** - Expand social links with platform auto-detection
@@ -88,7 +88,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Chinese Language (HSK) | 0/1 | Not started | - |
+| 1. Chinese Language (HSK) | 1/1 | Complete | 2026-04-03 |
 | 2. Additional Languages (CELPIP, TEF) | 0/1 | Not started | - |
 | 3. Professional Certifications | 0/1 | Not started | - |
 | 4. Social/Profile Links | 0/1 | Not started | - |
